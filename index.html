@@ -1,0 +1,549 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>ANAI — Умный помощник для семьи</title>
+    <meta name="description" content="ANAI — безопасный AI-помощник для детей 6–12 лет и их родителей. Помогает с учёбой, расписанием и создаёт спокойствие для всей семьи." />
+
+    <!-- ── PWA Manifest ─────────────────────────── -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- ── Theme Color ──────────────────────────── -->
+    <meta name="theme-color" content="#075fab" />
+    <meta name="msapplication-TileColor" content="#075fab" />
+
+    <!-- ── iOS PWA ───────────────────────────────── -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="ANAI" />
+    <meta name="mobile-web-app-capable" content="yes" />
+
+    <!-- Apple Touch Icons (iOS home screen) -->
+    <link rel="apple-touch-icon" href="/icons/icon-180.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152.png" />
+    <link rel="apple-touch-icon" sizes="167x167" href="/icons/icon-167.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180.png" />
+
+    <!-- iOS Splash Screens -->
+    <!-- iPhone 15 Pro Max (430x932) -->
+    <link rel="apple-touch-startup-image" media="screen and (device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="/icons/splash.png" />
+    <!-- iPhone 15 / 14 Pro (393x852) -->
+    <link rel="apple-touch-startup-image" media="screen and (device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)" href="/icons/splash.png" />
+    <!-- iPhone SE 3rd gen (375x667) -->
+    <link rel="apple-touch-startup-image" media="screen and (device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="/icons/splash.png" />
+    <!-- iPad Pro 12.9" -->
+    <link rel="apple-touch-startup-image" media="screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="/icons/splash.png" />
+    <!-- iPad Air / Mini -->
+    <link rel="apple-touch-startup-image" media="screen and (device-width: 820px) and (device-height: 1180px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)" href="/icons/splash.png" />
+
+    <!-- Standard favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-16.png" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="ANAI — Умный помощник для семьи" />
+    <meta property="og:description" content="Безопасный AI-помощник для детей 6–12 лет и спокойствие для родителей." />
+    <meta property="og:image" content="/icons/icon-512.png" />
+    <meta property="og:type" content="website" />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+
+      <!-- ════════════════════════════════════════
+           SIDEBAR
+      ════════════════════════════════════════ -->
+      <aside class="sidebar" aria-label="ANAI navigation">
+
+        <!-- Brand -->
+        <div class="brand">
+          <div class="brand-logo">A</div>
+          <div class="brand-text">
+            <strong>ANAI</strong>
+            <span>family assistant</span>
+          </div>
+        </div>
+
+        <!-- Mode Switch -->
+        <div class="mode-switch" role="tablist" aria-label="App mode">
+          <button class="mode-button active" data-mode="child" type="button" id="modeChild">
+            Ребёнок
+          </button>
+          <button class="mode-button" data-mode="parent" type="button" id="modeParent">
+            Родитель
+          </button>
+        </div>
+
+        <!-- Child Nav -->
+        <nav class="nav-list child-nav" role="tablist">
+          <button class="nav-item active" data-screen="child-home" type="button">
+            <span class="material-symbols-outlined icon-filled" aria-hidden="true">home</span>
+            <span class="nav-label">Главная</span>
+          </button>
+          <button class="nav-item" data-screen="child-chat" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">chat_bubble</span>
+            <span class="nav-label">Чат</span>
+          </button>
+          <button class="nav-item" data-screen="child-today" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">event_note</span>
+            <span class="nav-label">Сегодня</span>
+          </button>
+          <button class="nav-item" data-screen="child-profile" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">person</span>
+            <span class="nav-label">Профиль</span>
+          </button>
+        </nav>
+
+        <!-- Parent Nav -->
+        <nav class="nav-list parent-nav hidden" role="tablist">
+          <button class="nav-item active" data-screen="parent-dashboard" type="button">
+            <span class="material-symbols-outlined icon-filled" aria-hidden="true">space_dashboard</span>
+            <span class="nav-label">Дашборд</span>
+          </button>
+          <button class="nav-item" data-screen="parent-schedule" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
+            <span class="nav-label">Расписание</span>
+          </button>
+          <button class="nav-item" data-screen="parent-activity" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">monitoring</span>
+            <span class="nav-label">Активность</span>
+          </button>
+          <button class="nav-item" data-screen="parent-settings" type="button">
+            <span class="material-symbols-outlined" aria-hidden="true">tune</span>
+            <span class="nav-label">Настройки</span>
+          </button>
+        </nav>
+
+        <!-- Trust Note -->
+        <div class="trust-note">
+          <div class="trust-title">
+            <span class="material-symbols-outlined">shield</span>
+            Закрытая среда
+          </div>
+          <p>Без открытого интернета, соцсетей и генерации изображений в MVP.</p>
+        </div>
+
+      </aside>
+
+      <!-- ════════════════════════════════════════
+           MAIN CONTENT
+      ════════════════════════════════════════ -->
+      <main class="main">
+
+        <!-- ┌───────────────────────────────────┐
+             │  CHILD: HOME                      │
+             └───────────────────────────────────┘ -->
+        <section class="screen active" id="child-home" aria-label="Главная">
+          <div class="canvas-bg">
+            <!-- Greeting -->
+            <div class="home-greeting">
+              <div class="greeting-text">
+                <h1>Привет, Малик 👋</h1>
+                <p>Готов спокойно собрать день?</p>
+              </div>
+              <div class="greeting-avatar" aria-hidden="true">М</div>
+            </div>
+
+            <!-- Voice Orb -->
+            <div class="voice-zone">
+              <div class="voice-orb-wrapper">
+                <div class="voice-orb-glow" aria-hidden="true"></div>
+                <button class="voice-orb" id="voiceButton" type="button" aria-label="Говорить с ANAI">
+                  <span class="material-symbols-outlined icon-filled" id="orbIcon">mic</span>
+                  <span class="orb-label" id="orbLabel">Говорить</span>
+                </button>
+              </div>
+              <p class="voice-hint" id="voiceHint">Нажми, чтобы спросить ANAI про учёбу, расписание или просто поговорить</p>
+            </div>
+
+            <!-- Dynamic Cards -->
+            <div class="quick-cards-header">
+              <h2>Расписание на сегодня</h2>
+              <button class="see-all-btn" type="button" id="seeAllToday">Все →</button>
+            </div>
+            <div class="quick-cards" id="homeCards">
+              <!-- rendered by JS -->
+            </div>
+
+            <!-- Bento Stats -->
+            <div class="bento-grid" style="margin-top: 20px;">
+              <div class="bento-card blue">
+                <span class="material-symbols-outlined bento-icon blue">auto_awesome</span>
+                <div class="bento-label">Серия дней</div>
+                <div class="bento-value blue">5 дней</div>
+              </div>
+              <div class="bento-card coral">
+                <span class="material-symbols-outlined bento-icon coral">mood</span>
+                <div class="bento-label">Настроение</div>
+                <div class="bento-value coral">Отлично!</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ┌───────────────────────────────────┐
+             │  CHILD: CHAT                      │
+             └───────────────────────────────────┘ -->
+        <section class="screen" id="child-chat" aria-label="Чат с ANAI">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">AI assistant</p>
+              <h1 class="page-title">Чат с ANAI</h1>
+              <p class="page-subtitle">Короткие ответы, подсказки и спокойный тон.</p>
+            </div>
+            <button class="clear-chat-btn" id="clearChat" type="button">Очистить</button>
+          </div>
+
+          <div class="chat-container">
+            <div class="messages" id="messages" aria-live="polite" aria-label="Сообщения чата"></div>
+            <div class="typing-indicator" id="typingIndicator" aria-label="ANAI печатает">
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+              <div class="typing-dot"></div>
+            </div>
+            <form class="chat-form" id="chatForm" aria-label="Форма чата">
+              <input
+                id="chatInput"
+                class="chat-input"
+                type="text"
+                placeholder="Например: помоги с дробями"
+                autocomplete="off"
+                aria-label="Сообщение"
+              />
+              <button type="submit" class="chat-send-btn" aria-label="Отправить">
+                <span class="material-symbols-outlined">send</span>
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- ┌───────────────────────────────────┐
+             │  CHILD: TODAY                     │
+             └───────────────────────────────────┘ -->
+        <section class="screen" id="child-today" aria-label="Расписание на сегодня">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Today</p>
+              <h1 class="page-title">Твой день</h1>
+              <p class="page-subtitle">Расписание без лишнего шума.</p>
+            </div>
+          </div>
+          <div class="canvas-bg section-body">
+            <div class="timeline" id="childTimeline" aria-label="Расписание на сегодня"></div>
+          </div>
+        </section>
+
+        <!-- ┌───────────────────────────────────┐
+             │  CHILD: PROFILE                   │
+             └───────────────────────────────────┘ -->
+        <section class="screen" id="child-profile" aria-label="Профиль">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Memory</p>
+              <h1 class="page-title">Профиль Малика</h1>
+              <p class="page-subtitle">ANAI помнит интересы, занятия и маленькие победы.</p>
+            </div>
+          </div>
+          <div class="canvas-bg section-body">
+            <div class="profile-grid">
+              <div class="profile-card">
+                <div class="avatar" aria-hidden="true">М</div>
+                <div class="profile-name">Малик, 9 лет</div>
+                <p class="profile-bio">Любит шахматы, научные вопросы и плавание. Сейчас тренируется объяснять ход решения словами.</p>
+              </div>
+              <div class="memory-card">
+                <h2>Что помнит ANAI</h2>
+                <ul class="memory-list" aria-label="Память ANAI">
+                  <li><span class="memory-dot" aria-hidden="true"></span>Любимые предметы: математика и естествознание</li>
+                  <li><span class="memory-dot" aria-hidden="true"></span>Кружки: шахматы, английский, бассейн</li>
+                  <li><span class="memory-dot" aria-hidden="true"></span>Последний успех: дроби без подсказки</li>
+                  <li><span class="memory-dot" aria-hidden="true"></span>Поддержка: не торопить, когда задача кажется сложной</li>
+                  <li><span class="memory-dot" aria-hidden="true"></span>Вчера спросил, почему Луна меняет форму 🌙</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ┌───────────────────────────────────┐
+             │  PARENT: DASHBOARD                │
+             └───────────────────────────────────┘ -->
+        <section class="screen" id="parent-dashboard" aria-label="Дашборд родителя">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Parent dashboard</p>
+              <h1 class="page-title">Спокойная картина дня</h1>
+              <p class="page-subtitle">Главное о ребёнке за 5 секунд.</p>
+            </div>
+            <div class="status-pill safe" role="status">Всё спокойно</div>
+          </div>
+          <div class="canvas-bg section-body">
+            <div class="dashboard-grid">
+              <article class="status-card">
+                <div class="status-card-icon blue" aria-hidden="true">
+                  <span class="material-symbols-outlined">location_on</span>
+                </div>
+                <h2>Сейчас: школа</h2>
+                <p>Последнее обновление в 12:35. Следующее событие — домашняя работа в 15:00.</p>
+              </article>
+
+              <article class="status-card">
+                <div class="status-card-icon teal" aria-hidden="true">
+                  <span class="material-symbols-outlined">sentiment_satisfied</span>
+                </div>
+                <h2>Эмоциональный тон</h2>
+                <p>Спокойный. В математике была небольшая фрустрация — ANAI помог разбить задачу на шаги.</p>
+                <span class="care-tag wellbeing">
+                  <span class="material-symbols-outlined" style="font-size:13px;">favorite</span>
+                  Поддержка
+                </span>
+              </article>
+
+              <article class="status-card accent">
+                <div class="status-card-icon coral" aria-hidden="true">
+                  <span class="material-symbols-outlined">auto_awesome</span>
+                </div>
+                <h2>Insight дня</h2>
+                <p>Малик проявил сильный интерес к естествознанию и сам задал уточняющий вопрос о Луне.</p>
+                <span class="care-tag curiosity">
+                  <span class="material-symbols-outlined" style="font-size:13px;">lightbulb</span>
+                  Любопытство
+                </span>
+              </article>
+
+              <article class="status-card">
+                <div class="status-card-icon sand" aria-hidden="true">
+                  <span class="material-symbols-outlined">emoji_events</span>
+                </div>
+                <h2>Прогресс</h2>
+                <p>Сегодня решил 2 задачи по математике самостоятельно. Серия — 5 дней подряд.</p>
+                <span class="care-tag progress">
+                  <span class="material-symbols-outlined" style="font-size:13px;">trending_up</span>
+                  Рост
+                </span>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <!-- ┌───────────────────────────────────┐
+             │  PARENT: SCHEDULE                 │
+             └───────────────────────────────────┘ -->
+        <section class="screen" id="parent-schedule" aria-label="Управление расписанием">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Schedule management</p>
+              <h1 class="page-title">Расписание</h1>
+              <p class="page-subtitle">Добавляйте занятия и спокойные напоминания.</p>
+            </div>
+          </div>
+          <div class="canvas-bg section-body">
+
+            <div class="schedule-form-card">
+              <h2>Добавить занятие</h2>
+              <form class="schedule-form" id="scheduleForm" aria-label="Форма добавления занятия">
+                <div class="form-field">
+                  <label class="form-label" for="activityTitle">Название</label>
+                  <input id="activityTitle" type="text" placeholder="Например, шахматы" required />
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="activityTime">Время</label>
+                  <input id="activityTime" type="time" required />
+                </div>
+                <div class="form-field">
+                  <label class="form-label" for="activityType">Тип</label>
+                  <select id="activityType" aria-label="Тип занятия">
+                    <option value="school">🏫 Школа</option>
+                    <option value="homework">📘 Учёба</option>
+                    <option value="club">♟ Кружок</option>
+                    <option value="sport">🏊 Спорт</option>
+                  </select>
+                </div>
+                <button type="submit" class="add-btn">
+                  <span class="material-symbols-outlined" style="font-size:18px;">add</span>
+                  Добавить
+                </button>
+              </form>
+            </div>
+
+            <div class="voice-command-card" role="complementary" aria-label="Голосовая команда">
+              <span class="material-symbols-outlined">mic</span>
+              <div>
+                <span>Голосовая команда (скоро)</span>
+                <p>"Добавь шахматы по вторникам в 17:00"</p>
+              </div>
+            </div>
+
+            <div class="timeline" id="parentTimeline" aria-label="Текущее расписание"></div>
+          </div>
+        </section>
+
+        <!-- ┌───────────────────────────────────┐
+             │  PARENT: ACTIVITY                 │
+             └───────────────────────────────────┘ -->
+        <section class="screen" id="parent-activity" aria-label="Активность ребёнка">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Activity</p>
+              <h1 class="page-title">Активность</h1>
+              <p class="page-subtitle">Без ощущения слежки — только полезный контекст.</p>
+            </div>
+          </div>
+          <div class="canvas-bg section-body">
+            <div class="activity-list" id="activityList" aria-label="Список активности"></div>
+          </div>
+        </section>
+
+        <!-- ┌───────────────────────────────────┐
+             │  PARENT: SETTINGS                 │
+             └───────────────────────────────────┘ -->
+        <section class="screen" id="parent-settings" aria-label="Настройки доверия">
+          <div class="page-header">
+            <div>
+              <p class="eyebrow">Safety</p>
+              <h1 class="page-title">Настройки доверия</h1>
+              <p class="page-subtitle">Прозрачные границы для семейного AI.</p>
+            </div>
+          </div>
+          <div class="canvas-bg section-body">
+            <div class="settings-grid">
+
+              <label class="setting-row">
+                <div class="setting-icon">
+                  <span class="material-symbols-outlined">public_off</span>
+                </div>
+                <div class="setting-text">
+                  <strong>Без открытого интернет-поиска</strong>
+                  <span>ANAI работает только в безопасной закрытой среде</span>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" checked id="settingInternet" />
+                  <div class="toggle-track"></div>
+                  <div class="toggle-thumb"></div>
+                </label>
+              </label>
+
+              <label class="setting-row">
+                <div class="setting-icon">
+                  <span class="material-symbols-outlined">school</span>
+                </div>
+                <div class="setting-text">
+                  <strong>Показывать родителю учебные темы</strong>
+                  <span>Вы видите, по каким предметам задавались вопросы</span>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" checked id="settingTopics" />
+                  <div class="toggle-track"></div>
+                  <div class="toggle-thumb"></div>
+                </label>
+              </label>
+
+              <label class="setting-row">
+                <div class="setting-icon">
+                  <span class="material-symbols-outlined">notifications</span>
+                </div>
+                <div class="setting-text">
+                  <strong>Мягкие напоминания без давления</strong>
+                  <span>ANAI напоминает спокойно, не создавая тревогу</span>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" checked id="settingReminders" />
+                  <div class="toggle-track"></div>
+                  <div class="toggle-thumb"></div>
+                </label>
+              </label>
+
+              <label class="setting-row">
+                <div class="setting-icon" style="background: rgba(255,171,145,0.15); color: #c4541e;">
+                  <span class="material-symbols-outlined">graphic_eq</span>
+                </div>
+                <div class="setting-text">
+                  <strong>Voice AI — режим премиум</strong>
+                  <span>Голосовые ответы ANAI с тёплой интонацией</span>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" id="settingVoice" />
+                  <div class="toggle-track"></div>
+                  <div class="toggle-thumb"></div>
+                </label>
+              </label>
+
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div><!-- /app-shell -->
+
+    <!-- ════════════════════════════════════════
+         MOBILE BOTTOM NAV (iOS / PWA)
+    ════════════════════════════════════════ -->
+    <nav class="bottom-nav" id="bottomNav" aria-label="Mobile navigation">
+      <!-- Child bottom nav -->
+      <div class="bottom-nav-inner child-bottom-nav" id="childBottomNav">
+        <button class="bottom-nav-item active" data-screen="child-home" type="button" aria-label="Главная">
+          <span class="material-symbols-outlined">home</span>
+          Главная
+        </button>
+        <button class="bottom-nav-item" data-screen="child-chat" type="button" aria-label="Чат">
+          <span class="material-symbols-outlined">chat_bubble</span>
+          Чат
+        </button>
+        <button class="bottom-nav-item" data-screen="child-today" type="button" aria-label="Сегодня">
+          <span class="material-symbols-outlined">event_note</span>
+          Сегодня
+        </button>
+        <button class="bottom-nav-item" data-screen="child-profile" type="button" aria-label="Профиль">
+          <span class="material-symbols-outlined">person</span>
+          Профиль
+        </button>
+      </div>
+      <!-- Parent bottom nav -->
+      <div class="bottom-nav-inner parent-bottom-nav hidden" id="parentBottomNav">
+        <button class="bottom-nav-item active" data-screen="parent-dashboard" type="button" aria-label="Дашборд">
+          <span class="material-symbols-outlined">space_dashboard</span>
+          Дашборд
+        </button>
+        <button class="bottom-nav-item" data-screen="parent-schedule" type="button" aria-label="Расписание">
+          <span class="material-symbols-outlined">calendar_month</span>
+          Расписание
+        </button>
+        <button class="bottom-nav-item" data-screen="parent-activity" type="button" aria-label="Активность">
+          <span class="material-symbols-outlined">monitoring</span>
+          Активность
+        </button>
+        <button class="bottom-nav-item" data-screen="parent-settings" type="button" aria-label="Настройки">
+          <span class="material-symbols-outlined">tune</span>
+          Настройки
+        </button>
+      </div>
+    </nav>
+
+    <script src="app.js"></script>
+
+    <!-- ── Service Worker Registration ─────────── -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('/sw.js', { scope: '/' })
+            .then((reg) => console.log('[ANAI] SW registered', reg.scope))
+            .catch((err) => console.warn('[ANAI] SW failed', err));
+        });
+      }
+
+      // Handle shortcut URL params (e.g. ?screen=child-chat)
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetScreen = urlParams.get('screen');
+      if (targetScreen) {
+        window.addEventListener('DOMContentLoaded', () => {
+          const btn = document.querySelector(`[data-screen="${targetScreen}"]`);
+          if (btn) btn.click();
+        });
+      }
+    </script>
+  </body>
+</html>
+
